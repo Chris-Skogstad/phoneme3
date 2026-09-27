@@ -51,11 +51,11 @@ export async function POST(request: NextRequest) {
       return new NextResponse('Missing or invalid "title"', { status: 400, headers: corsHeaders });
     }
     if (!difficulty || typeof difficulty !== 'string' || !VALID_DIFFICULTIES.includes(difficulty)) {
-  return new NextResponse(
-    `"difficulty" must be one of: ${VALID_DIFFICULTIES.join(', ')}`,
-    { status: 400, headers: corsHeaders }
-  );
-}
+      return new NextResponse(
+        `"difficulty" must be one of: ${VALID_DIFFICULTIES.join(', ')}`,
+        { status: 400, headers: corsHeaders }
+      );
+    }
     if (!gridSize || typeof gridSize !== 'number') {
       return new NextResponse('Missing or invalid "gridSize"', { status: 400, headers: corsHeaders });
     }
@@ -84,6 +84,18 @@ export async function POST(request: NextRequest) {
       include: { words: true, creator: true },
     });
 
+    try {
+      await prisma.activityEvent.create({
+        data: {
+          activityType: 'wordsearch',
+          eventType: 'created',
+          activityId: wordSearch.id,
+        },
+      });
+    } catch (logError) {
+      console.error('Failed to log activity event:', logError);
+    }
+
     return NextResponse.json(wordSearch, { status: 201, headers: corsHeaders });
   } catch (error: any) {
     if (error?.code === 'P2025') {
@@ -104,14 +116,14 @@ export async function PATCH(request: NextRequest) {
 
     const { title, difficulty, gridSize, wordIds, outputSettings } = await request.json();
 
-if (difficulty !== undefined && !VALID_DIFFICULTIES.includes(difficulty)) {
-  return new NextResponse(
-    `"difficulty" must be one of: ${VALID_DIFFICULTIES.join(', ')}`,
-    { status: 400, headers: corsHeaders }
-  );
-}
+    if (difficulty !== undefined && !VALID_DIFFICULTIES.includes(difficulty)) {
+      return new NextResponse(
+        `"difficulty" must be one of: ${VALID_DIFFICULTIES.join(', ')}`,
+        { status: 400, headers: corsHeaders }
+      );
+    }
 
-const updated = await prisma.wordSearch.update({
+    const updated = await prisma.wordSearch.update({
       where: { id },
       data: {
         ...(title !== undefined && { title }),
@@ -134,7 +146,6 @@ const updated = await prisma.wordSearch.update({
     return new NextResponse('Invalid request', { status: 400, headers: corsHeaders });
   }
 }
-
 
 // DELETE – delete a word search by ID (?id=uuid)
 export async function DELETE(request: NextRequest) {

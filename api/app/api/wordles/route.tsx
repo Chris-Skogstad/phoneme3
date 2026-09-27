@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
       create: { name: creatorName },
     });
 
-    const wordle = await prisma.wordle.create({
+        const wordle = await prisma.wordle.create({
       data: {
         title,
         difficulty,
@@ -78,6 +78,14 @@ export async function POST(request: NextRequest) {
         words: { connect: wordIds.map((id: string) => ({ id })) },
       },
       include: { words: true, creator: true },
+    });
+
+    await prisma.activityEvent.create({
+      data: {
+        activityType: 'wordle',
+        eventType: 'created',
+        activityId: wordle.id,
+      },
     });
 
     return NextResponse.json(wordle, { status: 201, headers: corsHeaders });
