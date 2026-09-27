@@ -197,15 +197,34 @@ function WordlePageInner() {
 
   const handleGenerate = () => {
     if (!selectedWord) return;
-    const html = generateWordleHTML(selectedWord, maxGuesses, locale, showHints);
-    const blob = new Blob([html], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+    try {
+      const html = generateWordleHTML(selectedWord, maxGuesses, locale, showHints);
+      const blob = new Blob([html], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
 
-    link.href = url;
-    link.download = "phoneme-wordle.html";
-    link.click();
-    URL.revokeObjectURL(url);
+      link.href = url;
+      link.download = "phoneme-wordle.html";
+      link.click();
+      URL.revokeObjectURL(url);
+
+      fetch(`${getApiUrl()}/api/events`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ activityType: "wordle", eventType: "generation_success" }),
+      }).catch((err) => console.error("Failed to log event:", err));
+    } catch (err) {
+      console.error("Generation failed:", err);
+      fetch(`${getApiUrl()}/api/events`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          activityType: "wordle",
+          eventType: "generation_failed",
+          metadata: { error: String(err) },
+        }),
+      }).catch((e) => console.error("Failed to log event:", e));
+    }
   };
 
   const keyStates = computeKeyStates(guesses);
