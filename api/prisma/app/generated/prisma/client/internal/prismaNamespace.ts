@@ -400,7 +400,8 @@ export const ModelName = {
   User: 'User',
   Word: 'Word',
   WordSearch: 'WordSearch',
-  Wordle: 'Wordle'
+  Wordle: 'Wordle',
+  ActivityEvent: 'ActivityEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "word" | "wordSearch" | "wordle"
+    modelProps: "user" | "word" | "wordSearch" | "wordle" | "activityEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +717,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ActivityEvent: {
+      payload: Prisma.$ActivityEventPayload<ExtArgs>
+      fields: Prisma.ActivityEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActivityEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActivityEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        findFirst: {
+          args: Prisma.ActivityEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActivityEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        findMany: {
+          args: Prisma.ActivityEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>[]
+        }
+        create: {
+          args: Prisma.ActivityEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        createMany: {
+          args: Prisma.ActivityEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ActivityEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>[]
+        }
+        delete: {
+          args: Prisma.ActivityEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        update: {
+          args: Prisma.ActivityEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActivityEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActivityEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ActivityEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.ActivityEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActivityEventPayload>
+        }
+        aggregate: {
+          args: Prisma.ActivityEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActivityEvent>
+        }
+        groupBy: {
+          args: Prisma.ActivityEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActivityEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActivityEventCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -799,6 +874,19 @@ export const WordleScalarFieldEnum = {
 } as const
 
 export type WordleScalarFieldEnum = (typeof WordleScalarFieldEnum)[keyof typeof WordleScalarFieldEnum]
+
+
+export const ActivityEventScalarFieldEnum = {
+  id: 'id',
+  activityType: 'activityType',
+  eventType: 'eventType',
+  activityId: 'activityId',
+  timeOnPageMs: 'timeOnPageMs',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type ActivityEventScalarFieldEnum = (typeof ActivityEventScalarFieldEnum)[keyof typeof ActivityEventScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1072,6 +1160,7 @@ export type GlobalOmitConfig = {
   word?: Prisma.WordOmit
   wordSearch?: Prisma.WordSearchOmit
   wordle?: Prisma.WordleOmit
+  activityEvent?: Prisma.ActivityEventOmit
 }
 
 /* Types for Logging */

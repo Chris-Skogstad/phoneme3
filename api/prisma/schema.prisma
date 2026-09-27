@@ -53,3 +53,16 @@ model Wordle {
   creatorId      String
   createdAt      DateTime @default(now())
 }
+model ActivityEvent {
+  id           String   @id @default(uuid())
+  activityType String
+  eventType    String
+  activityId   String?
+  timeOnPageMs Int?
+  metadata     Json?
+  createdAt    DateTime @default(now())
+
+  @@index([eventType])
+  @@index([activityType])
+  @@index([createdAt])
+}

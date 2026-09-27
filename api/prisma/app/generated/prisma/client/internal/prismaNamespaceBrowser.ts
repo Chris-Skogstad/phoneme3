@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Word: 'Word',
   WordSearch: 'WordSearch',
-  Wordle: 'Wordle'
+  Wordle: 'Wordle',
+  ActivityEvent: 'ActivityEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,6 +118,19 @@ export const WordleScalarFieldEnum = {
 } as const
 
 export type WordleScalarFieldEnum = (typeof WordleScalarFieldEnum)[keyof typeof WordleScalarFieldEnum]
+
+
+export const ActivityEventScalarFieldEnum = {
+  id: 'id',
+  activityType: 'activityType',
+  eventType: 'eventType',
+  activityId: 'activityId',
+  timeOnPageMs: 'timeOnPageMs',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type ActivityEventScalarFieldEnum = (typeof ActivityEventScalarFieldEnum)[keyof typeof ActivityEventScalarFieldEnum]
 
 
 export const SortOrder = {

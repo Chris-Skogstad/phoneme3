@@ -37,3 +37,8 @@ export type WordSearch = Prisma.WordSearchModel
  * 
  */
 export type Wordle = Prisma.WordleModel
+/**
+ * Model ActivityEvent
+ * 
+ */
+export type ActivityEvent = Prisma.ActivityEventModel
