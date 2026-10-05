@@ -1,6 +1,7 @@
-import { fetchGithubStars } from "../shared/fetch-github-stars";
-
-export default async function Page() {
-  const stars = await fetchGithubStars();
-  return <p>Next.js has {stars} ⭐️</p>;
+export default function Page() {
+  return (
+    <main>
+      <h1>Phoneme Builder API</h1>
+    </main>
+  );
 }

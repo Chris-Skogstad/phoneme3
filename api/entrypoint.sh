@@ -7,5 +7,6 @@
 npx prisma generate
 npx prisma migrate deploy
 
-# Start the app
-npm run dev
+# Production build and start
+npm run build
+npm run start
