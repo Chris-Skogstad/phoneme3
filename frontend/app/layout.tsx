@@ -9,6 +9,7 @@ import CookieConsentWrapper from "./components/CookieConsentWrapper";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Locale } from "./lib/locales";
 import { LocaleProvider } from "./context/LocaleContext";
+import PageTimer from "./components/PageTimer"
 
 
 const geistSans = Geist({
@@ -49,6 +50,7 @@ export default async function RootLayout({
           <LocaleProvider initialLocale={locale}>
             <Header />
             <Nav />
+            <PageTimer />
             {children}
             <Footer />
             <CookieConsentWrapper />

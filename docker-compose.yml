@@ -92,6 +92,7 @@ services:
     restart: always
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./alerts.yml:/etc/prometheus/alerts.yml
     ports:
       - "9090:9090"
 

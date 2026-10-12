@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,5 +12,14 @@ export async function OPTIONS() {
 }
 
 export async function GET() {
-  return NextResponse.json({ status: 'ok' }, { status: 200, headers: corsHeaders });
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return NextResponse.json({ status: 'ok' }, { status: 200, headers: corsHeaders });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { status: 'error', message: 'Database unreachable' },
+      { status: 503, headers: corsHeaders }
+    );
+  }
 }
