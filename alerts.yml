@@ -1,6 +1,3 @@
-<PageTimer /> on the line after <Nav />. The frontend runs the dev server, so it reloads by itself. An event is only sent when you leave a page, so click through a few pages, then check the dashboard.
-3. No alert rules
-The brief lists alerts next to metrics, and nothing in prometheus.yaml defines one. Add one that fires when Prometheus cannot reach the collector. Create alerts.yml next to docker-compose.yml:
 groups:
   - name: phoneme-alerts
     rules:
